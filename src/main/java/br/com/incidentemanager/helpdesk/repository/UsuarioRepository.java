@@ -20,6 +20,8 @@ import java.util.function.Function;
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity, UUID> {
     //Repository faz com que o usuário seja salvo no BD
 
-
+    //4º 8:00 exceções
+    Optional<UsuarioEntity> findByUsername(String username);
+    //
 
 }

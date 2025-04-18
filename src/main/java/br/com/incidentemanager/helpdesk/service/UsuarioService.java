@@ -2,6 +2,7 @@ package br.com.incidentemanager.helpdesk.service;
 
 import br.com.incidentemanager.helpdesk.domain.Usuario;
 import br.com.incidentemanager.helpdesk.entity.UsuarioEntity;
+import br.com.incidentemanager.helpdesk.exception.BusinessException;
 import br.com.incidentemanager.helpdesk.mapper.UsuarioMapper;
 import br.com.incidentemanager.helpdesk.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 //@RequiredArgsConstructor
 @Service
@@ -36,11 +38,11 @@ public class UsuarioService {
 
     public  Usuario criaUsuario(Usuario novoUsuario) {
 
-        //Optional<UsuarioEntity> existentUser = userRepository.findByUsername(newUsuario.getUsername());
+        Optional<UsuarioEntity> usuarioExistente = usuarioRepository.findByUsername(novoUsuario.getUsername());
 
-//        if (existentUser.isPresent()) {
-//            throw new BusinessException("This username is already in use in the system");
-//        }
+        if (usuarioExistente.isPresent()) {
+            throw new BusinessException("Este username já existe na base de dados!");
+        }
 
         UsuarioEntity entity = mapper.toEntity(novoUsuario);
         entity.setCriadoEm(new Date());
