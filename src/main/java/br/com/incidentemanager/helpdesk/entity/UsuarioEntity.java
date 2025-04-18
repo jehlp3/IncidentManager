@@ -1,10 +1,8 @@
 package br.com.incidentemanager.helpdesk.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Generated;
 
 import java.util.Date;
 import java.util.UUID;
@@ -15,6 +13,7 @@ import java.util.UUID;
 public class UsuarioEntity {
 
     @Id
+    @GeneratedValue
     @Column(name = "id_usuario")
     private UUID idUsuario;
 

@@ -1,15 +1,22 @@
 package br.com.incidentemanager.helpdesk.dto;
 
 
+import lombok.Data;
+
+import java.util.Date;
+
 //é o que é exposto para o cliente, front
-public record CriaUsuarioDto(    String username,
-                                 String senha,
-                                 String nome,
-                                 String telefone,
-                                 String email,
-                                 boolean  ativo,
-                                 boolean  ehTecnicoTi,
-                                 boolean   ehTecnicoNivelDois,
-                                 boolean   ehAdministrador) {
+@Data
+public class CriaUsuarioDto {
+    String username;
+    String senha;
+    String nome;
+    String telefone;
+    String email;
+    Date criadoEm;
+    boolean  ativo;
+    boolean  ehTecnicoTi;
+    boolean   ehTecnicoNivelDois;
+    boolean   ehAdministrador;
 
 }
