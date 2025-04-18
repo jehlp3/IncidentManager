@@ -15,3 +15,9 @@ spring:
     username: postgres
     password: admin123
     url: jdbc:postgresql://localhost:5432/helpdeskIncident
+  springdoc:
+    api-docs:
+      enabled: true
+    swagger-ui:
+      enabled: true
+      path: /swagger-ui.html  # Defina explicitamente o caminho do Swagger UI

@@ -5,6 +5,8 @@ import br.com.incidentemanager.helpdesk.dto.CriaUsuarioDto;
 import br.com.incidentemanager.helpdesk.dto.UsuarioDto;
 import br.com.incidentemanager.helpdesk.mapper.UsuarioMapper;
 import br.com.incidentemanager.helpdesk.service.UsuarioService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import java.util.UUID;
 
 // Especifica que essa classe é um controller
 @Controller
+@OpenAPIDefinition
 @RequiredArgsConstructor // Lombok irá gerar o construtor automaticamente para injetar o UsuarioService
 @RequestMapping(path = "/usuarios")
 public class UsuarioController {
@@ -30,7 +33,7 @@ public class UsuarioController {
 
 
 
-    //@Operation(description = "This method creates a new user in the system")
+    @Operation(description = "Este método cria um novo usuário no sistema")
     @PostMapping
     public ResponseEntity<UsuarioDto> create(@RequestBody CriaUsuarioDto request) {
         Usuario domain = mapper.toDomain(request);
