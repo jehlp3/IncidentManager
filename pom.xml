@@ -95,6 +95,13 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>6.4.4</version>
 		</dependency>
+		<dependency>
+			<!-- Permite ao spring ter acesso às variáveis de ambiente da aplicação, não
+			 expondo credenciais -->
+			<groupId>me.paulschwarz</groupId>
+			<artifactId>spring-dotenv</artifactId>
+			<version>2.3.0</version>
+		</dependency>
 
 	</dependencies>
 

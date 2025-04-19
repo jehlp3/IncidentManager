@@ -5,8 +5,7 @@ import br.com.incidentemanager.helpdesk.entity.UsuarioEntity;
 import br.com.incidentemanager.helpdesk.exception.BusinessException;
 import br.com.incidentemanager.helpdesk.mapper.UsuarioMapper;
 import br.com.incidentemanager.helpdesk.repository.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

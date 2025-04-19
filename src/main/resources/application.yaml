@@ -12,9 +12,12 @@ spring:
     locations: classpath:db/migration
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: admin123
-    url: jdbc:postgresql://localhost:5432/helpdeskIncident
+#    username: postgres #Aqui ou no .env - necessário dependência paulswharz
+#    password: admin123
+#    url: jdbc:postgresql://localhost:5432/helpdeskIncident
+    username: ${env.DATABASE_USERNAME}
+    password: ${env.DATABASE_PASSWORD}
+    url: ${env.DATABASE_URL}
   springdoc:
     api-docs:
       enabled: true

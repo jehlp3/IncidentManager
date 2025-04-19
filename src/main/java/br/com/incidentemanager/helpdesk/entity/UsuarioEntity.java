@@ -2,7 +2,6 @@ package br.com.incidentemanager.helpdesk.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Generated;
 
 import java.util.Date;
 import java.util.UUID;
