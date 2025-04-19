@@ -18,14 +18,14 @@ import java.util.Optional;
 public class UsuarioService {
 
     //@Autowired
-    private final UsuarioRepository userRepository;
+    //private final UsuarioRepository userRepository;
 
     private final UsuarioMapper mapper;
     private final UsuarioRepository usuarioRepository;
 
 
-    public UsuarioService(UsuarioRepository userRepository, UsuarioMapper mapper, UsuarioRepository usuarioRepository) {
-        this.userRepository = userRepository;
+    public UsuarioService( UsuarioMapper mapper, UsuarioRepository usuarioRepository) {
+        //this.userRepository = userRepository;
         this.mapper = mapper;
         this.usuarioRepository = usuarioRepository;
     }
