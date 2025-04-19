@@ -4,6 +4,7 @@ package br.com.incidentemanager.helpdesk.service;
 import br.com.incidentemanager.helpdesk.domain.Chamado;
 import br.com.incidentemanager.helpdesk.entity.ChamadoEntity;
 import br.com.incidentemanager.helpdesk.entity.UsuarioEntity;
+import br.com.incidentemanager.helpdesk.enums.ChamadoStatus;
 import br.com.incidentemanager.helpdesk.exception.ObjectNotFoundException;
 import br.com.incidentemanager.helpdesk.mapper.ChamadoMapper;
 import br.com.incidentemanager.helpdesk.repository.ChamadoRepository;
@@ -39,6 +40,7 @@ public class ChamadoService {
 
         }
         entity.setCriadoPor(criadoPeloUsuario.get());
+        entity.setStatus(ChamadoStatus.ABERTO);
         entity.setCriadoEm(new Date());
         entity = chamadoRepository.save(entity);
         return mapper.toDomain(entity);
