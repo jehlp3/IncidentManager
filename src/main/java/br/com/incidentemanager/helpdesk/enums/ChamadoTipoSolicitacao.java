@@ -1,0 +1,13 @@
+package br.com.incidentemanager.helpdesk.enums;
+
+public enum ChamadoTipoSolicitacao {
+    REQUISICAO_SUPORTE_TI,
+    SOLICITACAO_ACESSO_SISTEMAS,
+    OBTER_VPN,
+    REQUISICAO_ACESSO_PRIVILEGIADO,
+    REPORTAR_PROBLEMA_SISTEMA,
+    REINICIALIZACAO_DE_SENHA,
+    OBTER_ACESSO_WIFI,
+    REQUISICAO_HARDWARE,
+    OUTRO
+}
