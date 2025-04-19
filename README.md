@@ -40,7 +40,7 @@ http://localhost:8081/api/v1/chamados
 "descricao": "Nesta manhã não recebemos e-mails de envio",
 "status": "ABERTO",
 "tipo_solicitacao": "REQUISICAO_SUPORTE_TI",
-"criticidade": "ALTSSSA",
+"criticidade": "ALTA",
 "impacto": "SISTEMA_ESPECIFICO",
 "criadoPorUsuarioId": "crie um usuário primeiro e acrescente aqui o id",
 "ativo": true,
