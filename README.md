@@ -38,7 +38,6 @@ http://localhost:8081/api/v1/chamados
 {
 "assunto": "Não envio de e-mail",
 "descricao": "Nesta manhã não recebemos e-mails de envio",
-"status": "ABERTO",
 "tipo_solicitacao": "REQUISICAO_SUPORTE_TI",
 "criticidade": "ALTA",
 "impacto": "SISTEMA_ESPECIFICO",
