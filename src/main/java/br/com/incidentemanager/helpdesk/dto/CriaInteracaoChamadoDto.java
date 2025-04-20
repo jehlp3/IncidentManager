@@ -12,7 +12,7 @@ public class CriaInteracaoChamadoDto {
 
     private UUID idUsuario;
 
-    //private ChamadoStatus status;
+    private ChamadoStatus status;
 
 
 }

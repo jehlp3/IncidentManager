@@ -67,6 +67,13 @@ public class ChamadoService {
         }
 
         Date now = new Date();
+        ChamadoStatus status = ChamadoStatus.EM_PROGRESSO;
+
+        //Se o usuário for diferente da pessoa que abriu, atribua o atendente
+        if(chamado.getCriadoPor().getIdUsuario() != usuario.getIdUsuario()){
+            chamado.setAtendente(usuario);
+            status = ChamadoStatus.AGUARDANDO_SOLICITANTE;
+        }
 
         InteracaoChamadoEntity entity = new InteracaoChamadoEntity();
         entity.setIdChamado(chamado); //variável ticket no vídeo
@@ -74,17 +81,14 @@ public class ChamadoService {
         entity.setCriadoPor(usuario);
         entity.setEnviadoPeloUsuarioId(usuario);
         entity.setCriadoEm(now);
-        entity.setStatus(domain.getStatus());
+        entity.setStatus(status);
         interacaoChamadoRepository.save(entity); //Salvando no BD
 
-        //Se o usuário for diferente da pessoa que abriu, atribua o atendente
-        if(chamado.getCriadoPor().getIdUsuario() != usuario.getIdUsuario()){
-            chamado.setAtendente(usuario);
-        }
+
 
         chamado.setModificado_em(now); //Identifica que o chamado foi modificado
         chamado.setModificado_por(usuario);
-        chamado.setStatus(domain.getStatus());
+        chamado.setStatus(status);
         chamado = chamadoRepository.save(chamado);  //Salvando no BD
 
         return mapper.toDomain(chamado);
