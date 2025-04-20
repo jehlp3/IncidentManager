@@ -1,8 +1,8 @@
 1º Criação da tabela <br>
 2º Entity <br>
 3º Enums <br>
-4º Repository <br>
-5º Service <br>
+4º Repository - Toda classe precisa ter<br>
+5º Service - Anexos e Interações dizem respeito ao Chamado, nem toda classe terá um service<br>
 6º Domain <br>
 7º Dto <br>
 8º Mapper <br>
@@ -45,3 +45,9 @@ http://localhost:8081/api/v1/chamados
 "ativo": true,
 "foi_escalado": false
 }
+
+#TODO Status
+Ao criar = ABERTO
+EM_PROGRESSO ou AGUARDANDO_SOLICITANTE
+Criar um endpoint apenas para resolver o chamado = o Status deverá ser ou EM_PROGRESSO ou AGUARDANDO_SOLICITANTE,
+Criar um endpoint apenas para cancelar o chamado 
