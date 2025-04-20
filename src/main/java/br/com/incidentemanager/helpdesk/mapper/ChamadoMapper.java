@@ -1,8 +1,10 @@
 package br.com.incidentemanager.helpdesk.mapper;
 
 import br.com.incidentemanager.helpdesk.domain.Chamado;
+import br.com.incidentemanager.helpdesk.domain.InteracaoChamado;
 import br.com.incidentemanager.helpdesk.dto.ChamadoDto;
 import br.com.incidentemanager.helpdesk.dto.CriaChamadoDto;
+import br.com.incidentemanager.helpdesk.dto.CriaInteracaoChamadoDto;
 import br.com.incidentemanager.helpdesk.dto.CriaUsuarioDto;
 import br.com.incidentemanager.helpdesk.entity.ChamadoEntity;
 import org.mapstruct.Mapper;
@@ -19,6 +21,6 @@ public interface ChamadoMapper {
 
     Chamado toDomain(CriaChamadoDto dto);
 
-    //Chamado toDomain(CriaUsuarioDto dto);
+    InteracaoChamado toDomain(CriaInteracaoChamadoDto dto);
 
 }

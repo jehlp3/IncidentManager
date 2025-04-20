@@ -1,0 +1,18 @@
+package br.com.incidentemanager.helpdesk.dto;
+
+import br.com.incidentemanager.helpdesk.enums.ChamadoStatus;
+import lombok.Data;
+
+import java.util.UUID;
+
+@Data
+public class CriaInteracaoChamadoDto {
+
+    private String mensagem;
+
+    private UUID idUsuario;
+
+    //private ChamadoStatus status;
+
+
+}
