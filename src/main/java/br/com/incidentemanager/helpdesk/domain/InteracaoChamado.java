@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -35,4 +36,6 @@ public class InteracaoChamado {
     private Date modificadoEm ;
 
     private UsuarioEntity modificadoPor ;
+
+    private List<Anexo> anexos;
 }

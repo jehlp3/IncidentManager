@@ -39,4 +39,12 @@ public class AnexoChamadoEntity {
     @ManyToOne
     @JoinColumn(name = "modificado_por")
     private UsuarioEntity modificadoPor ;
+
+    public ChamadoEntity getIdChamado() {
+        return idChamado;
+    }
+
+    public void setIdChamado(ChamadoEntity idChamado) {
+        this.idChamado = idChamado;
+    }
 }

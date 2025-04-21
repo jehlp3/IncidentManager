@@ -24,3 +24,8 @@ spring:
     swagger-ui:
       enabled: true
       path: /swagger-ui.html  # Defina explicitamente o caminho do Swagger UI
+
+#Variáveis da minha aplicação
+#Em qual local do seu computador serão salvos os arquivos dos anexos enviados
+helpdesk:
+  attachments-folder: ${env.ATTACHMENT_FOLDER}

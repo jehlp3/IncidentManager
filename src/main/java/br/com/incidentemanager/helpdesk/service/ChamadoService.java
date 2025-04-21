@@ -1,8 +1,10 @@
 package br.com.incidentemanager.helpdesk.service;
 
 
+import br.com.incidentemanager.helpdesk.domain.Anexo;
 import br.com.incidentemanager.helpdesk.domain.Chamado;
 import br.com.incidentemanager.helpdesk.domain.InteracaoChamado;
+import br.com.incidentemanager.helpdesk.entity.AnexoChamadoEntity;
 import br.com.incidentemanager.helpdesk.entity.ChamadoEntity;
 import br.com.incidentemanager.helpdesk.entity.InteracaoChamadoEntity;
 import br.com.incidentemanager.helpdesk.entity.UsuarioEntity;
@@ -10,12 +12,19 @@ import br.com.incidentemanager.helpdesk.enums.ChamadoStatus;
 import br.com.incidentemanager.helpdesk.exception.BusinessException;
 import br.com.incidentemanager.helpdesk.exception.ObjectNotFoundException;
 import br.com.incidentemanager.helpdesk.mapper.ChamadoMapper;
+import br.com.incidentemanager.helpdesk.repository.AnexoChamadoRepository;
 import br.com.incidentemanager.helpdesk.repository.ChamadoRepository;
 import br.com.incidentemanager.helpdesk.repository.InteracaoChamadoRepository;
 import br.com.incidentemanager.helpdesk.repository.UsuarioRepository;
+import br.com.incidentemanager.helpdesk.utils.FileUtils;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -28,16 +37,28 @@ public class ChamadoService {
 
     private UsuarioRepository usuarioRepository;
 
-
     private ChamadoMapper mapper;
 
-    public ChamadoService(InteracaoChamadoRepository interacaoChamadoRepository, UsuarioRepository usuarioRepository, ChamadoRepository chamadoRepository, ChamadoMapper mapper) {
+    private AnexoChamadoRepository anexoChamadoRepository;
+
+    @Value("${helpdesk.attachments-folder}")
+    private String anexosPasta;
+    
+    public ChamadoService(InteracaoChamadoRepository interacaoChamadoRepository,
+                          UsuarioRepository usuarioRepository,
+                          ChamadoRepository chamadoRepository,
+                          ChamadoMapper mapper,
+                          AnexoChamadoRepository anexoChamadoRepository) {
         this.interacaoChamadoRepository = interacaoChamadoRepository;
         this.usuarioRepository = usuarioRepository;
         this.mapper = mapper;
         this.chamadoRepository = chamadoRepository;
+        this.anexoChamadoRepository = anexoChamadoRepository;
+
     }
 
+    //Só valida a transação caso tudo dê certo, caso 1 anexo dê falha ele não finaliza
+    @Transactional
     public Chamado criaChamado(Chamado novoChamado){
 
         ChamadoEntity entity = mapper.toEntity(novoChamado);
@@ -50,6 +71,21 @@ public class ChamadoService {
         entity.setStatus(ChamadoStatus.ABERTO);
         entity.setCriadoEm(new Date());
         entity = chamadoRepository.save(entity);
+
+        //Verificando se há anexos
+        if(novoChamado.getAnexos() != null && !novoChamado.getAnexos().isEmpty()){
+            for (Anexo anexo : novoChamado.getAnexos()) {
+                AnexoChamadoEntity anexoChamadoEntity = new AnexoChamadoEntity();
+                anexoChamadoEntity.setIdChamado(entity);
+                anexoChamadoEntity.setCriadoPor(criadoPeloUsuario.get());
+                anexoChamadoEntity.setCriadoEm(new Date());
+                anexoChamadoEntity.setFilename(anexo.getFilename());
+                anexoChamadoEntity = anexoChamadoRepository.save(anexoChamadoEntity); //P pegar o id
+                saveFileToDisk(anexoChamadoEntity, anexo.getContent());
+
+            }
+        }
+
         return mapper.toDomain(entity);
     }
 
@@ -84,7 +120,18 @@ public class ChamadoService {
         entity.setStatus(status);
         interacaoChamadoRepository.save(entity); //Salvando no BD
 
-
+        if (domain.getAnexos() != null && !domain.getAnexos().isEmpty()) {
+            for (Anexo attachment : domain.getAnexos()) {
+                AnexoChamadoEntity anexoChamadoEntity = new AnexoChamadoEntity();
+                //anexoChamadoEntity.setTicketInteraction(entity);
+                anexoChamadoEntity.setIdInteracaoChamado(entity);
+                anexoChamadoEntity.setCriadoPor(usuario);
+                anexoChamadoEntity.setCriadoEm(new Date());
+                anexoChamadoEntity.setFilename(attachment.getFilename());
+                anexoChamadoEntity = anexoChamadoRepository.save(anexoChamadoEntity);
+                saveFileToDisk(anexoChamadoEntity, attachment.getContent());
+            }
+        }
 
         chamado.setModificado_em(now); //Identifica que o chamado foi modificado
         chamado.setModificado_por(usuario);
@@ -92,5 +139,22 @@ public class ChamadoService {
         chamado = chamadoRepository.save(chamado);  //Salvando no BD
 
         return mapper.toDomain(chamado);
+    }
+
+
+    private void saveFileToDisk(AnexoChamadoEntity entity, String content) {
+        byte[] attachmentContent = null;
+        try {
+            attachmentContent = FileUtils.convertBase64ToByteArray(content);
+            String fileName = entity.getIdAnexo().toString();
+
+            FileUtils.saveByteArrayToFile(attachmentContent, new File(anexosPasta + fileName));
+        } catch (IOException ex) {
+            throw new BusinessException("Error saving " + entity.getFilename() + " file");
+        }
+    }
+
+    public List<Chamado> listAll() {
+        return mapper.toDomain(chamadoRepository.findAll());
     }
 }

@@ -12,11 +12,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -48,4 +46,13 @@ public class ChamadoController {
         ChamadoDto chamadoEditado = mapper.toDto(chamadoService.interacaoChamado(domain));
         return ResponseEntity.ok(chamadoEditado);
     }
+
+    @Operation(description = "This method creates a new support ticket interaction in the system")
+    @GetMapping
+    public ResponseEntity<List<ChamadoDto>> listAllTickets() {
+
+        List<ChamadoDto> chamados = mapper.toDto(chamadoService.listAll());
+        return ResponseEntity.ok(chamados);
+    }
+
 }

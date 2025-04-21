@@ -1,11 +1,13 @@
 package br.com.incidentemanager.helpdesk.dto;
 
+import br.com.incidentemanager.helpdesk.domain.Anexo;
 import br.com.incidentemanager.helpdesk.enums.ChamadoCriticidade;
 import br.com.incidentemanager.helpdesk.enums.ChamadoImpacto;
 import br.com.incidentemanager.helpdesk.enums.ChamadoStatus;
 import br.com.incidentemanager.helpdesk.enums.ChamadoTipoSolicitacao;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -31,5 +33,8 @@ public class CriaChamadoDto {
     private boolean foi_escalado;
 
     private UUID criadoPorUsuarioId; //Nomes diferentes para não ter conflito no mapper
+
+    //Aula 6 - Criando a lista dos anexos que serão recebidos no sistema
+    private List<Anexo> anexos;
 
 }

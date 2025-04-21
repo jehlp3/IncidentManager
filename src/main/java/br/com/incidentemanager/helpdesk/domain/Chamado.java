@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -43,4 +44,6 @@ public class Chamado {
     private Date modificado_em ;
 
     private UsuarioEntity modificado_por ;
+
+    private List<Anexo> anexos;
 }
