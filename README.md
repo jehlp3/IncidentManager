@@ -20,6 +20,7 @@ Aula 4
 
 
 url: http://localhost:8081/api/v1/usuarios
+POST
 {
 "username": "admin7",
 "senha": "admin123",
@@ -35,6 +36,7 @@ url: http://localhost:8081/api/v1/usuarios
 
 
 http://localhost:8081/api/v1/chamados
+POST
 {
 "assunto": "Não envio de e-mail",
 "descricao": "Nesta manhã não recebemos e-mails de envio",
@@ -46,8 +48,26 @@ http://localhost:8081/api/v1/chamados
 "foi_escalado": false
 }
 
+http://localhost:8081/api/v1/chamados/f9dcae4e-cf97-449a-9e8a-1a5955b05d57/interacao
+POST
+{
+"mensagem": "Já iniciamos o seu atendimento, poderia informar de quais usuários os e-mails não foram disparados?",
+"idUsuario": "360a94c2-046f-4170-be9d-b58f624069a0"
+}
+
+http://localhost:8081/api/v1/chamados
+GET
+
+
+
 #TODO Status
 Ao criar = ABERTO
 EM_PROGRESSO ou AGUARDANDO_SOLICITANTE
 Criar um endpoint apenas para resolver o chamado = o Status deverá ser ou EM_PROGRESSO ou AGUARDANDO_SOLICITANTE,
 Criar um endpoint apenas para cancelar o chamado 
+
+Programa que converte os anexos em Base64
+https://www.base64-image.de/
+
+#Dica
+Caso não funcione de primeira, vá em Maven>lifecicle>clean
