@@ -31,7 +31,6 @@ POST (Sem autenticação)
 "ehTecnicoTi": true,
 "ehTecnicoNivelDois": true,
 "ehAdministrador": true
-
 }
 
 
@@ -43,7 +42,6 @@ POST (Com autenticação)
 "tipo_solicitacao": "REQUISICAO_SUPORTE_TI",
 "criticidade": "ALTA",
 "impacto": "SISTEMA_ESPECIFICO",
-"criadoPorUsuarioId": "crie um usuário primeiro e acrescente aqui o id",
 "ativo": true,
 "foi_escalado": false
 }
@@ -51,8 +49,7 @@ POST (Com autenticação)
 http://localhost:8081/api/v1/chamados/f9dcae4e-cf97-449a-9e8a-1a5955b05d57/interacao
 POST (Com autenticação)
 {
-"mensagem": "Já iniciamos o seu atendimento, poderia informar de quais usuários os e-mails não foram disparados?",
-"idUsuario": "360a94c2-046f-4170-be9d-b58f624069a0"
+"mensagem": "Já iniciamos o seu atendimento, poderia informar de quais usuários os e-mails não foram disparados?"
 }
 
 http://localhost:8081/api/v1/chamados
