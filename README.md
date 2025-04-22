@@ -20,7 +20,7 @@ Aula 4
 
 
 url: http://localhost:8081/api/v1/usuarios
-POST
+POST (Sem autenticação)
 {
 "username": "admin7",
 "senha": "admin123",
@@ -36,7 +36,7 @@ POST
 
 
 http://localhost:8081/api/v1/chamados
-POST
+POST (Com autenticação)
 {
 "assunto": "Não envio de e-mail",
 "descricao": "Nesta manhã não recebemos e-mails de envio",
@@ -49,14 +49,14 @@ POST
 }
 
 http://localhost:8081/api/v1/chamados/f9dcae4e-cf97-449a-9e8a-1a5955b05d57/interacao
-POST
+POST (Com autenticação)
 {
 "mensagem": "Já iniciamos o seu atendimento, poderia informar de quais usuários os e-mails não foram disparados?",
 "idUsuario": "360a94c2-046f-4170-be9d-b58f624069a0"
 }
 
 http://localhost:8081/api/v1/chamados
-GET
+GET (Sem autenticação)
 
 
 
@@ -71,3 +71,11 @@ https://www.base64-image.de/
 
 #Dica
 Caso não funcione de primeira, vá em Maven>lifecicle>clean
+
+Provável caminho das variáveis, necessário validar
+1º URL
+2º Domain
+3º Service
+4º Entity 
+5º Repository
+
