@@ -25,8 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-
+import java.util.UUID;
 
 @Service
 public class ChamadoService {
@@ -158,5 +157,17 @@ public class ChamadoService {
 
     public List<Chamado> listAll() {
         return mapper.toDomain(chamadoRepository.findAll());
+    }
+
+    public Chamado getById(UUID idChamado) {
+        ChamadoEntity entity = chamadoRepository.findById(idChamado)
+                .orElseThrow(() -> new ObjectNotFoundException("Chamado não encontrado"));
+        return mapper.toDomain(entity);
+    }
+
+    public List<InteracaoChamado> getInteracoesByChamadoId(UUID idChamado) {
+        ChamadoEntity chamadoEntity = chamadoRepository.findById(idChamado)
+                .orElseThrow(() -> new ObjectNotFoundException("Chamado não encontrado"));
+        return mapper.toInteracaoDomain(interacaoChamadoRepository.findByIdChamado(chamadoEntity));
     }
 }

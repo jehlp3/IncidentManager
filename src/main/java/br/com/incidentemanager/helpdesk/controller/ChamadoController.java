@@ -5,9 +5,9 @@ import br.com.incidentemanager.helpdesk.domain.InteracaoChamado;
 import br.com.incidentemanager.helpdesk.dto.ChamadoDto;
 import br.com.incidentemanager.helpdesk.dto.CriaChamadoDto;
 import br.com.incidentemanager.helpdesk.dto.CriaInteracaoChamadoDto;
+import br.com.incidentemanager.helpdesk.dto.InteracaoChamadoDto;
 import br.com.incidentemanager.helpdesk.mapper.ChamadoMapper;
 import br.com.incidentemanager.helpdesk.service.ChamadoService;
-import br.com.incidentemanager.helpdesk.service.UsuarioService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,6 @@ public class ChamadoController {
 
     private final ChamadoMapper mapper;
 
-
     @Operation(description = "Este método cria um novo chamado no sistema")
     @PostMapping
     public ResponseEntity<ChamadoDto> create(@RequestBody CriaChamadoDto request,
@@ -42,6 +41,7 @@ public class ChamadoController {
         ChamadoDto chamadoCriado = mapper.toDto(chamadoService.criaChamado(domain, authentication.getName()));
         return ResponseEntity.ok(chamadoCriado);
     }
+
 
     @Operation(description = "Este método cria uma nova interação do chamado no sistema")
     @PostMapping(value = "/{id}/interacao")
@@ -54,6 +54,23 @@ public class ChamadoController {
         ChamadoDto chamadoEditado = mapper.toDto(chamadoService.interacaoChamado(domain, authentication.getName()));
         return ResponseEntity.ok(chamadoEditado);
     }
+
+    @Operation(description = "Este método busca um chamado pelo seu id")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ChamadoDto> getById(@PathVariable(name = "id") UUID idChamado,
+                                             Authentication authentication) {
+        ChamadoDto chamado = mapper.toDto(chamadoService.getById(idChamado));
+        return ResponseEntity.ok(chamado);
+    }
+
+    @Operation(description = "Este método busca as interações de um chamado pelo seu id")
+    @GetMapping(value = "/{id}/interacoes")
+    public ResponseEntity<List<InteracaoChamadoDto>> getInteracoesByChamadoId(@PathVariable(name = "id") UUID idChamado,
+                                              Authentication authentication) {
+        List<InteracaoChamadoDto> chamado = mapper.toInteracaoDto(chamadoService.getInteracoesByChamadoId(idChamado));
+        return ResponseEntity.ok(chamado);
+    }
+
 
     @Operation(description = "This method creates a new support ticket interaction in the system")
     @GetMapping
