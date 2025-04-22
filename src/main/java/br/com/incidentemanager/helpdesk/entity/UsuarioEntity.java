@@ -20,7 +20,7 @@ public class UsuarioEntity {
 
     private String nome;
 
-    private String senha;
+    private String password;
 
     private String email;
 
@@ -50,8 +50,16 @@ public class UsuarioEntity {
         this.idUsuario = idUsuario;
     }
 
+    public UUID getIdUsuario() {
+        return idUsuario;
+    }
+
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setModificado_por(UUID modificado_por) {
@@ -94,8 +102,12 @@ public class UsuarioEntity {
         this.nome = nome;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setEhTecnicoNivelDois(boolean ehTecnicoNivelDois) {

@@ -2,17 +2,20 @@ package br.com.incidentemanager.helpdesk.service;
 
 import br.com.incidentemanager.helpdesk.domain.Usuario;
 import br.com.incidentemanager.helpdesk.entity.UsuarioEntity;
+import br.com.incidentemanager.helpdesk.exception.AuthorizationException;
 import br.com.incidentemanager.helpdesk.exception.BusinessException;
 import br.com.incidentemanager.helpdesk.mapper.UsuarioMapper;
 import br.com.incidentemanager.helpdesk.repository.UsuarioRepository;
 
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Optional;
 
+@Log4j2
 //@RequiredArgsConstructor
 @Service
 public class UsuarioService {
@@ -45,7 +48,7 @@ public class UsuarioService {
 
         UsuarioEntity entity = mapper.toEntity(novoUsuario);
         entity.setCriadoEm(new Date());
-        entity.setSenha(new BCryptPasswordEncoder().encode(entity.getSenha()));
+        entity.setPassword(new BCryptPasswordEncoder().encode(entity.getPassword()));
         entity = usuarioRepository.save(entity);
         return mapper.toDomain(entity);
 
@@ -66,5 +69,13 @@ public class UsuarioService {
 //        entity.setEhAdministrador(newUser.ehAdministrador());
 //        entity.setCriadoEm(new Date());
 //        usuarioRepository.save(entity); // Agora, o usuarioRepository não é null
+    }
+
+    public Usuario findByUsername(String username) {
+        UsuarioEntity entity = usuarioRepository.findByUsername(username).orElse(null);
+        if (entity == null) {
+            throw new AuthorizationException("User not found");
+        }
+        return mapper.toDomain(entity);
     }
 }

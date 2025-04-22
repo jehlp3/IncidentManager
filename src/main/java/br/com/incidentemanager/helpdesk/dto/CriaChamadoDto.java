@@ -32,7 +32,8 @@ public class CriaChamadoDto {
 
     private boolean foi_escalado;
 
-    private UUID criadoPorUsuarioId; //Nomes diferentes para não ter conflito no mapper
+    //Não necessário mais por conta da autenticação
+    //private UUID criadoPorUsuarioId; //Nomes diferentes para não ter conflito no mapper
 
     //Aula 6 - Criando a lista dos anexos que serão recebidos no sistema
     private List<Anexo> anexos;

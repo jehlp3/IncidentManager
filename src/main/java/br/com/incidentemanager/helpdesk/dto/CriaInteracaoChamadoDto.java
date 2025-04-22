@@ -12,7 +12,8 @@ public class CriaInteracaoChamadoDto {
 
     private String mensagem;
 
-    private UUID idUsuario;
+    //Não necessário mais por conta da autenticação
+    //private UUID idUsuario;
 
     private ChamadoStatus status;
 

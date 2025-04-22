@@ -8,7 +8,7 @@ import java.util.UUID;
 public class Usuario {
     UUID idUsuario;
     String username;
-    String senha;
+    String password;
     String nome;
     String telefone;
     String email;

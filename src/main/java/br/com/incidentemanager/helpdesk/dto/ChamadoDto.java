@@ -35,7 +35,7 @@ public class ChamadoDto {
 
     private Date criadoEm;
 
-    private UsuarioDto criadoPor;
+    //private UsuarioDto criadoPor;
 
     private Date modificado_em ;
 

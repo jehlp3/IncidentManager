@@ -38,4 +38,12 @@ public class InteracaoChamado {
     private UsuarioEntity modificadoPor ;
 
     private List<Anexo> anexos;
+
+    public UUID getIdChamado() {
+        return idChamado;
+    }
+
+    public void setIdChamado(UUID idChamado) {
+        this.idChamado = idChamado;
+    }
 }

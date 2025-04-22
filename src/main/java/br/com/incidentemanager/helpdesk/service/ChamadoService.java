@@ -54,20 +54,20 @@ public class ChamadoService {
         this.mapper = mapper;
         this.chamadoRepository = chamadoRepository;
         this.anexoChamadoRepository = anexoChamadoRepository;
-
     }
 
     //Só valida a transação caso tudo dê certo, caso 1 anexo dê falha ele não finaliza
     @Transactional
-    public Chamado criaChamado(Chamado novoChamado){
+    public Chamado criaChamado(Chamado novoChamado, String username){
 
         ChamadoEntity entity = mapper.toEntity(novoChamado);
-        Optional<UsuarioEntity> criadoPeloUsuario = usuarioRepository.findById(novoChamado.getCriadoPorUsuarioId());
-        if(criadoPeloUsuario.isEmpty()){
-            throw new ObjectNotFoundException("ERRO: "+ novoChamado.getCriadoPorUsuarioId() +" = usuário não encontrado pelo id fornecido");
 
-        }
-        entity.setCriadoPor(criadoPeloUsuario.get());
+        UsuarioEntity criadoPeloUsuario = usuarioRepository.findByUsername(username).orElse(null);
+       if(criadoPeloUsuario == null){
+           throw new ObjectNotFoundException("Usuário não encontrado pelo id fornecido");
+       }
+
+        entity.setCriadoPor(criadoPeloUsuario);
         entity.setStatus(ChamadoStatus.ABERTO);
         entity.setCriadoEm(new Date());
         entity = chamadoRepository.save(entity);
@@ -77,7 +77,7 @@ public class ChamadoService {
             for (Anexo anexo : novoChamado.getAnexos()) {
                 AnexoChamadoEntity anexoChamadoEntity = new AnexoChamadoEntity();
                 anexoChamadoEntity.setIdChamado(entity);
-                anexoChamadoEntity.setCriadoPor(criadoPeloUsuario.get());
+                anexoChamadoEntity.setCriadoPor(criadoPeloUsuario);
                 anexoChamadoEntity.setCriadoEm(new Date());
                 anexoChamadoEntity.setFilename(anexo.getFilename());
                 anexoChamadoEntity = anexoChamadoRepository.save(anexoChamadoEntity); //P pegar o id
@@ -89,14 +89,16 @@ public class ChamadoService {
         return mapper.toDomain(entity);
     }
 
-    public Chamado interacaoChamado(InteracaoChamado domain) {
+    public Chamado interacaoChamado(InteracaoChamado domain, String username) {
+
+
         ChamadoEntity chamado = chamadoRepository.findById(domain.getIdChamado()).orElse(null);
 
         if(chamado == null){
             throw new BusinessException("ERRO: " + domain.getIdChamado() +" Chamado não encontrado pelo id fornecido");
         }
 
-        UsuarioEntity usuario = usuarioRepository.findById(domain.getIdUsuario()).orElse(null);
+        UsuarioEntity usuario = usuarioRepository.findByUsername(username).orElse(null);
 
         if(usuario == null){
             throw new BusinessException("ERRO: " + domain.getIdUsuario() +" Usuário não encontrado pelo id fornecido");
@@ -112,7 +114,7 @@ public class ChamadoService {
         }
 
         InteracaoChamadoEntity entity = new InteracaoChamadoEntity();
-        entity.setIdChamado(chamado); //variável ticket no vídeo
+        entity.setIdChamado(chamado);; //variável ticket no vídeo
         entity.setMensagem(domain.getMensagem());
         entity.setCriadoPor(usuario);
         entity.setEnviadoPeloUsuarioId(usuario);

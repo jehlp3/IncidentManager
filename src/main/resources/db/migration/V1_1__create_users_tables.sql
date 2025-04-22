@@ -1,8 +1,8 @@
 CREATE TABLE users (
     id_usuario uuid primary key ,
     nome varchar(100) not null,
-    username varchar(100) not null,
-    senha varchar(30),
+    username varchar(100) UNIQUE not null,
+    password varchar(100),
     email varchar(100),
     ativo boolean not null ,
     telefone char(11) null,

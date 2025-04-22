@@ -5,7 +5,6 @@ import br.com.incidentemanager.helpdesk.dto.CriaUsuarioDto;
 import br.com.incidentemanager.helpdesk.dto.UsuarioDto;
 import br.com.incidentemanager.helpdesk.entity.UsuarioEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {

@@ -5,9 +5,7 @@ import br.com.incidentemanager.helpdesk.domain.InteracaoChamado;
 import br.com.incidentemanager.helpdesk.dto.ChamadoDto;
 import br.com.incidentemanager.helpdesk.dto.CriaChamadoDto;
 import br.com.incidentemanager.helpdesk.dto.CriaInteracaoChamadoDto;
-import br.com.incidentemanager.helpdesk.dto.CriaUsuarioDto;
 import br.com.incidentemanager.helpdesk.entity.ChamadoEntity;
-import br.com.incidentemanager.helpdesk.entity.InteracaoChamadoEntity;
 import org.mapstruct.Mapper;
 
 import java.util.List;

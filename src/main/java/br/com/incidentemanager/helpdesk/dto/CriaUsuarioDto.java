@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 public class CriaUsuarioDto {
     String username;
-    String senha;
+    String password;
     String nome;
     String telefone;
     String email;

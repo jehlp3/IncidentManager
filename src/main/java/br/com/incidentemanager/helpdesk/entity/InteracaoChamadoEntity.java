@@ -19,7 +19,7 @@ public class InteracaoChamadoEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_chamado")
-    private static ChamadoEntity idChamado; //Variável ticket no vídeo
+    private ChamadoEntity idChamado; //Variável ticket no vídeo
 
     @Enumerated(EnumType.STRING)
     private ChamadoStatus status;
@@ -44,15 +44,12 @@ public class InteracaoChamadoEntity {
     @JoinColumn(name = "modificado_por")
     private UsuarioEntity modificadoPor ;
 
-    public static void setIdChamado(ChamadoEntity idChamado) {
-        InteracaoChamadoEntity.idChamado = idChamado;
+    public ChamadoEntity getIdChamado() {
+        return idChamado;
     }
 
-//    public static ChamadoEntity getIdChamado() {
-//        return idChamado;
-//    }
-//
-//    public void setIdChamado(ChamadoEntity idChamado) {
-//        this.idChamado = idChamado;
-//    }
+    public void setIdChamado(ChamadoEntity idChamado) {
+        this.idChamado = idChamado;
+    }
+
 }

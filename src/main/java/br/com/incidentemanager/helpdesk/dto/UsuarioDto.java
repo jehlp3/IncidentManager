@@ -10,7 +10,7 @@ public class UsuarioDto {
     UUID idUsuario;
     String username;
     String nome;
-    String senha;
+    String password;
     String telefone;
     String email;
     Date criadoEm;

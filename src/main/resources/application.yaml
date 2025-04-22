@@ -29,3 +29,6 @@ spring:
 #Em qual local do seu computador serão salvos os arquivos dos anexos enviados
 helpdesk:
   attachments-folder: ${env.ATTACHMENT_FOLDER}
+
+jwt:
+  secret: h9G+QWz3G7u0Rk5+Q3YzN9Kz+zN5R3F5zYQw3zN6Q1Z3Qk5yW3L0==

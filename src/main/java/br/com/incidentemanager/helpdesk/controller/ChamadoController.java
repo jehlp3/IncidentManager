@@ -7,10 +7,12 @@ import br.com.incidentemanager.helpdesk.dto.CriaChamadoDto;
 import br.com.incidentemanager.helpdesk.dto.CriaInteracaoChamadoDto;
 import br.com.incidentemanager.helpdesk.mapper.ChamadoMapper;
 import br.com.incidentemanager.helpdesk.service.ChamadoService;
+import br.com.incidentemanager.helpdesk.service.UsuarioService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,18 +34,24 @@ public class ChamadoController {
 
     @Operation(description = "Este método cria um novo chamado no sistema")
     @PostMapping
-    public ResponseEntity<ChamadoDto> create(@RequestBody CriaChamadoDto request) {
+    public ResponseEntity<ChamadoDto> create(@RequestBody CriaChamadoDto request,
+                                             Authentication authentication
+                                            //Ao adicionar a autenticação vc consegue pegar o usuário da ação
+                                            ) {
         Chamado domain = mapper.toDomain(request);
-        ChamadoDto chamadoCriado = mapper.toDto(chamadoService.criaChamado(domain));
+        ChamadoDto chamadoCriado = mapper.toDto(chamadoService.criaChamado(domain, authentication.getName()));
         return ResponseEntity.ok(chamadoCriado);
     }
 
     @Operation(description = "Este método cria uma nova interação do chamado no sistema")
     @PostMapping(value = "/{id}/interacao")
-    public ResponseEntity<ChamadoDto> create(@PathVariable(name = "id") UUID idChamado, @RequestBody CriaInteracaoChamadoDto request) {
+    public ResponseEntity<ChamadoDto> create(@PathVariable(name = "id") UUID idChamado,
+                                             @RequestBody CriaInteracaoChamadoDto request,
+                                             Authentication authentication) {
         InteracaoChamado domain = mapper.toDomain(request);
         domain.setIdChamado(idChamado);
-        ChamadoDto chamadoEditado = mapper.toDto(chamadoService.interacaoChamado(domain));
+
+        ChamadoDto chamadoEditado = mapper.toDto(chamadoService.interacaoChamado(domain, authentication.getName()));
         return ResponseEntity.ok(chamadoEditado);
     }
 
