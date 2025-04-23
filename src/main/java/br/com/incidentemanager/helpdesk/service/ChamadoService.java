@@ -113,7 +113,7 @@ public class ChamadoService {
         }
 
         InteracaoChamadoEntity entity = new InteracaoChamadoEntity();
-        entity.setIdChamado(chamado);; //variável ticket no vídeo
+        entity.setIdChamado(chamado); //variável ticket no vídeo
         entity.setMensagem(domain.getMensagem());
         entity.setCriadoPor(usuario);
         entity.setEnviadoPeloUsuarioId(usuario);

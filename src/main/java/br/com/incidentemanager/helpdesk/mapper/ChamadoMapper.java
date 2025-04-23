@@ -36,7 +36,7 @@ public interface ChamadoMapper {
 
     InteracaoChamadoDto toDto(InteracaoChamado domain);
 
-    InteracaoChamado toDomain(InteracaoChamadoDto dto);
+    //InteracaoChamado toDomain(InteracaoChamadoDto dto);
 
     default UUID map(ChamadoEntity entity) {
         return entity != null ? entity.getIdChamado() : null;
