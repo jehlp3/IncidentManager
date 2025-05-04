@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Log4j2
@@ -77,5 +78,9 @@ public class UsuarioService {
             throw new AuthorizationException("User not found");
         }
         return mapper.toDomain(entity);
+    }
+
+    public List<Usuario> listAll() {
+        return mapper.toDomain(usuarioRepository.findAll());
     }
 }
