@@ -142,7 +142,6 @@ public class ChamadoService {
         return mapper.toDomain(chamado);
     }
 
-
     private void saveFileToDisk(AnexoChamadoEntity entity, String content) {
         byte[] attachmentContent = null;
         try {
@@ -170,4 +169,93 @@ public class ChamadoService {
                 .orElseThrow(() -> new ObjectNotFoundException("Chamado não encontrado"));
         return mapper.toInteracaoDomain(interacaoChamadoRepository.findByIdChamado(chamadoEntity));
     }
+
+    @Transactional
+    public Chamado escalaChamado(UUID idChamado, String username) {
+        ChamadoEntity chamado = chamadoRepository.findById(idChamado).orElse(null);
+
+        if (chamado == null) {
+            throw new BusinessException("Chamado não encontrado pelo id fornecido");
+        }
+
+        if (chamado.getStatus() == ChamadoStatus.ABERTO || chamado.getStatus() == ChamadoStatus.RESOLVIDO || chamado.getStatus() == ChamadoStatus.CANCELADO) {
+            throw new BusinessException("Não é possível escalar um chamado com o status ABERTO, RESOLVIDO ou CANCELADO.");
+        }
+
+        UsuarioEntity usuario = usuarioRepository.findByUsername(username).orElse(null);
+
+        if (usuario == null) {
+            throw new BusinessException("Usuário não encontrado pelo id fornecido");
+        }
+
+        chamado.setFoi_escalado(true);
+        chamado.setModificado_em(new Date());
+        chamado.setModificado_por(usuario);
+
+        chamado = chamadoRepository.save(chamado);
+
+        return mapper.toDomain(chamado);
+    }
+
+    @Transactional
+    public Chamado resolveChamado(UUID idChamado, String username) {
+        ChamadoEntity chamado = chamadoRepository.findById(idChamado).orElse(null);
+
+        if (chamado == null) {
+            throw new BusinessException("Chamado não encontrado pelo id fornecido");
+        }
+
+        if (chamado.getStatus() == ChamadoStatus.RESOLVIDO || chamado.getStatus() == ChamadoStatus.CANCELADO) {
+            throw new BusinessException("Não é possível resolver um chamado com o status RESOLVIDO ou CANCELADO.");
+        }
+        if (chamado.getStatus() == ChamadoStatus.ABERTO) {
+            throw new BusinessException("Não é possível resolver um chamado sem nenhuma interação, status do chamado: ABERTO.");
+        }
+
+        UsuarioEntity usuario = usuarioRepository.findByUsername(username).orElse(null);
+
+        if (usuario == null) {
+            throw new BusinessException("Usuário não encontrado pelo id fornecido");
+        }
+
+        chamado.setStatus(ChamadoStatus.RESOLVIDO);
+        chamado.setModificado_em(new Date());
+        chamado.setModificado_por(usuario);
+
+        chamado = chamadoRepository.save(chamado);
+
+        return mapper.toDomain(chamado);
+    }
+
+    @Transactional
+    public Chamado cancelaChamado(UUID idChamado, String username) {
+        ChamadoEntity chamado = chamadoRepository.findById(idChamado).orElse(null);
+
+        if (chamado == null) {
+            throw new BusinessException("Chamado não encontrado pelo id fornecido");
+        }
+
+        if (chamado.getStatus() == ChamadoStatus.RESOLVIDO || chamado.getStatus() == ChamadoStatus.CANCELADO) {
+            throw new BusinessException("Não é possível cancelar um chamado com o status RESOLVIDO ou CANCELADO.");
+        }
+
+        UsuarioEntity usuario = usuarioRepository.findByUsername(username).orElse(null);
+
+        if (usuario == null) {
+            throw new BusinessException("Usuário não encontrado pelo id fornecido");
+        }
+
+        if(chamado.getCriadoPor().getIdUsuario() != usuario.getIdUsuario()){
+            chamado.setAtendente(usuario);
+        }
+
+        chamado.setStatus(ChamadoStatus.CANCELADO);
+        chamado.setModificado_em(new Date());
+        chamado.setModificado_por(usuario);
+
+        chamado = chamadoRepository.save(chamado);
+
+        return mapper.toDomain(chamado);
+    }
+
 }

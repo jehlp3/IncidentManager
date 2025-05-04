@@ -66,10 +66,14 @@ public class ChamadoController {
     @Operation(description = "Este método busca as interações de um chamado pelo seu id")
     @GetMapping(value = "/{id}/interacoes")
     public ResponseEntity<List<InteracaoChamadoDto>> getInteracoesByChamadoId(@PathVariable(name = "id") UUID idChamado,
-                                              Authentication authentication) {
-        List<InteracaoChamadoDto> chamado = mapper.toInteracaoDto(chamadoService.getInteracoesByChamadoId(idChamado));
-        return ResponseEntity.ok(chamado);
+                                                                              Authentication authentication) {
+        List<InteracaoChamadoDto> interacoes = mapper.toInteracaoDto(chamadoService.getInteracoesByChamadoId(idChamado));
+        
+        interacoes.sort((i1, i2) -> i2.getCriadoEm().compareTo(i1.getCriadoEm())); // Ordem decrescente
+
+        return ResponseEntity.ok(interacoes);
     }
+
 
 
     @Operation(description = "This method creates a new support ticket interaction in the system")
@@ -80,4 +84,27 @@ public class ChamadoController {
         return ResponseEntity.ok(chamados);
     }
 
+    @Operation(description = "Este método escalona um chamado, alterando o atributo foi_escalado, se permitido.")
+    @PostMapping(value = "/{id}/escala")
+    public ResponseEntity<ChamadoDto> escalaChamado(@PathVariable(name = "id") UUID idChamado,
+                                                    Authentication authentication) {
+        ChamadoDto chamadoEditado = mapper.toDto(chamadoService.escalaChamado(idChamado, authentication.getName()));
+        return ResponseEntity.ok(chamadoEditado);
+    }
+
+    @Operation(description = "Este método resolve um chamado, alterando o atributo status para RESOLVIDO.")
+    @PostMapping(value = "/{id}/resolve")
+    public ResponseEntity<ChamadoDto> resolveChamado(@PathVariable(name = "id") UUID idChamado,
+                                                    Authentication authentication) {
+        ChamadoDto chamadoEditado = mapper.toDto(chamadoService.resolveChamado(idChamado, authentication.getName()));
+        return ResponseEntity.ok(chamadoEditado);
+    }
+
+    @Operation(description = "Este método resolve um chamado, alterando o atributo status para RESOLVIDO.")
+    @PostMapping(value = "/{id}/cancela")
+    public ResponseEntity<ChamadoDto> cancelaChamado(@PathVariable(name = "id") UUID idChamado,
+                                                     Authentication authentication) {
+        ChamadoDto chamadoEditado = mapper.toDto(chamadoService.cancelaChamado(idChamado, authentication.getName()));
+        return ResponseEntity.ok(chamadoEditado);
+    }
 }

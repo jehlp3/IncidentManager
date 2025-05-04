@@ -46,19 +46,34 @@ POST (Com autenticação)
 http://localhost:8081/api/v1/chamados/f9dcae4e-cf97-449a-9e8a-1a5955b05d57/interacao
 POST (Com autenticação)
 {
-"mensagem": "Já iniciamos o seu atendimento, poderia informar de quais usuários os e-mails não foram disparados?"
+"mensagem": "Já iniciamos o seu atendimento, poderia informar de quais usuários os e-mails não foram disparados?",
+"anexos": [
+{
+"filename": "teste.png",
+"content": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABBsAAAEgCAYAAAD1x3sNAAAAAXNSR0IArs4c6QAAAARnQU1BAAC..."
+}
+]
 }
 
 http://localhost:8081/api/v1/chamados
 GET (Sem autenticação)
 
+http://localhost:8081/api/v1/chamados/236a376c-9eee-48c2-bed8-440e5cb71a89/escala
+POST
+
+http://localhost:8081/api/v1/chamados/236a376c-9eee-48c2-bed8-440e5cb71a89/resolve
+POST
+
+http://localhost:8081/api/v1/chamados/c9f064e0-5d0b-4ac1-aa8f-40260d4e7319/cancela
+POST
 
 
 #TODO Status
-Ao criar = ABERTO
-EM_PROGRESSO ou AGUARDANDO_SOLICITANTE
-Criar um endpoint apenas para resolver o chamado = o Status deverá ser ou EM_PROGRESSO ou AGUARDANDO_SOLICITANTE,
-Criar um endpoint apenas para cancelar o chamado 
+Ao criar = ABERTO = ok
+Criar um endpoint apenas para resolver o chamado = o Status deverá ser ou EM_PROGRESSO ou AGUARDANDO_SOLICITANTE = ok
+Criar um endpoint apenas para cancelar o chamado = ok
+Alterar o endpoint cancelar o chamado para exigir um comentário
+Documentação
 
 Programa que converte os anexos em Base64
 https://www.base64-image.de/
