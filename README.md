@@ -67,6 +67,9 @@ POST
 http://localhost:8081/api/v1/chamados/c9f064e0-5d0b-4ac1-aa8f-40260d4e7319/cancela
 POST
 
+Busca usuário pelo id
+http://localhost:8081/api/v1/usuarios/f542f494-caf2-4386-bd6b-75b79b53e7df
+GET
 
 #TODO Status
 Ao criar = ABERTO = ok

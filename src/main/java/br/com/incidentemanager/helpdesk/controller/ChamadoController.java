@@ -76,7 +76,7 @@ public class ChamadoController {
 
 
 
-    @Operation(description = "This method creates a new support ticket interaction in the system")
+    @Operation(description = "Este método lista todos os chamados existentes")
     @GetMapping
     public ResponseEntity<List<ChamadoDto>> listAllTickets() {
 

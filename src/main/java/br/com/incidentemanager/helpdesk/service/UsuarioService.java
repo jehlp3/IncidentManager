@@ -1,9 +1,11 @@
 package br.com.incidentemanager.helpdesk.service;
 
 import br.com.incidentemanager.helpdesk.domain.Usuario;
+import br.com.incidentemanager.helpdesk.entity.ChamadoEntity;
 import br.com.incidentemanager.helpdesk.entity.UsuarioEntity;
 import br.com.incidentemanager.helpdesk.exception.AuthorizationException;
 import br.com.incidentemanager.helpdesk.exception.BusinessException;
+import br.com.incidentemanager.helpdesk.exception.ObjectNotFoundException;
 import br.com.incidentemanager.helpdesk.mapper.UsuarioMapper;
 import br.com.incidentemanager.helpdesk.repository.UsuarioRepository;
 
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Log4j2
 //@RequiredArgsConstructor
@@ -82,5 +85,11 @@ public class UsuarioService {
 
     public List<Usuario> listAll() {
         return mapper.toDomain(usuarioRepository.findAll());
+    }
+
+    public Usuario getById(UUID idUsuario) {
+        UsuarioEntity entity = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new ObjectNotFoundException("Usuario não encontrado"));
+        return mapper.toDomain(entity);
     }
 }

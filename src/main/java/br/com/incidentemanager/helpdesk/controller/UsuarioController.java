@@ -10,13 +10,12 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 
 // Especifica que essa classe é um controller
@@ -77,6 +76,14 @@ public class UsuarioController {
 
         List<UsuarioDto> usuarios = mapper.toDto(usuarioService.listAll());
         return ResponseEntity.ok(usuarios);
+    }
+
+    @Operation(description = "Este método busca um usuário pelo seu id")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UsuarioDto> getById(@PathVariable(name = "id") UUID idChamado,
+                                              Authentication authentication) {
+        UsuarioDto usuario = mapper.toDto(usuarioService.getById(idChamado));
+        return ResponseEntity.ok(usuario);
     }
 
 }
