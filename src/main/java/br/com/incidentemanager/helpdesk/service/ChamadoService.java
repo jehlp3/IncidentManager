@@ -20,6 +20,7 @@ import br.com.incidentemanager.helpdesk.utils.FileUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import java.io.File;
 import java.io.IOException;
@@ -155,7 +156,9 @@ public class ChamadoService {
     }
 
     public List<Chamado> listAll() {
-        return mapper.toDomain(chamadoRepository.findAll());
+        return mapper.toDomain(
+                chamadoRepository.findAll(Sort.by(Sort.Direction.DESC, "criadoEm"))
+        );
     }
 
     public Chamado getById(UUID idChamado) {
