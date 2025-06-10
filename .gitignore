@@ -1,5 +1,6 @@
 HELP.md
 target/
+.env para não subir as variaveis de ambiente
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
