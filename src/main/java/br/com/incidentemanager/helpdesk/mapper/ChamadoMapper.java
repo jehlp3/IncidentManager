@@ -9,9 +9,11 @@ import br.com.incidentemanager.helpdesk.entity.InteracaoChamadoEntity;
 import br.com.incidentemanager.helpdesk.entity.UsuarioEntity;
 import org.mapstruct.Mapper;
 
+import java.beans.JavaBean;
 import java.util.List;
 import java.util.UUID;
 
+@JavaBean
 @Mapper(componentModel = "spring")
 public interface ChamadoMapper {
 

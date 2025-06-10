@@ -1,15 +1,16 @@
 package br.com.incidentemanager.helpdesk.mapper;
 
-import br.com.incidentemanager.helpdesk.domain.Chamado;
+import java.beans.JavaBean;
+import java.util.List;
+
+import org.mapstruct.Mapper;
+
 import br.com.incidentemanager.helpdesk.domain.Usuario;
-import br.com.incidentemanager.helpdesk.dto.ChamadoDto;
 import br.com.incidentemanager.helpdesk.dto.CriaUsuarioDto;
 import br.com.incidentemanager.helpdesk.dto.UsuarioDto;
 import br.com.incidentemanager.helpdesk.entity.UsuarioEntity;
-import org.mapstruct.Mapper;
 
-import java.util.List;
-
+@JavaBean
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
 
